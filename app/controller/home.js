@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const Controller = require("egg").Controller;
+const Controller = require('egg').Controller;
 
 class HomeController extends Controller {
   async index() {
@@ -28,19 +28,19 @@ class HomeController extends Controller {
   // 新增用户方法
   async addUser() {
     const { ctx } = this;
-    const { name } = ctx.request.body;
+    // const { name } = ctx.request.body;
     try {
-      const result = await ctx.service.home.addUser(name)
+      // const result = await ctx.service.home.addUser(name)
       ctx.body = {
         code: 200,
         msg: '添加成功',
-        data: null
+        data: null,
       }
     } catch (e) {
       ctx.body = {
         code: 500,
         msg: '添加失败',
-        data: null
+        data: null,
       }
     }
   }

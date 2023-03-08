@@ -159,7 +159,7 @@ class BillController extends Controller {
           list: filterListMap || [], // 格式化后，并且经过分页处理的数据
         },
       };
-    } catch {
+    } catch (e) {
       ctx.body = {
         code: 500,
         msg: "系统错误",
