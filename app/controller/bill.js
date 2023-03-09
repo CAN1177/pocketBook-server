@@ -20,9 +20,9 @@ class BillController extends Controller {
     // 判空处理，这里前端也可以做，但是后端也需要做一层判断。
     if (!amount || !type_id || !type_name || !date || !pay_type) {
       ctx.body = {
-        'code': 400,
-        'msg': '参数错误',
-        'data': null,
+        code: 400,
+        msg: '参数错误',
+        data: null,
       };
       return;
     }
@@ -48,15 +48,15 @@ class BillController extends Controller {
         user_id,
       });
       ctx.body = {
-        'code': 200,
-        'msg': '请求成功',
-        'data': null,
+        code: 200,
+        msg: '请求成功',
+        data: null,
       };
     } catch (error) {
       ctx.body = {
-        'code': 500,
-        'msg': '系统错误',
-        'data': null,
+        code: 500,
+        msg: '系统错误',
+        data: null,
       };
     }
   }
@@ -109,14 +109,14 @@ class BillController extends Controller {
           ) {
             curr.push({
               date,
-              'bills': [ item ],
+              bills: [ item ],
             });
           }
           // 如果 curr 为空数组，则默认添加第一个账单项 item ，格式化为下列模式
           if (!curr.length) {
             curr.push({
               date,
-              'bills': [ item ],
+              bills: [ item ],
             });
           }
           return curr;
@@ -153,20 +153,20 @@ class BillController extends Controller {
 
       // 返回数据
       ctx.body = {
-        'code': 200,
-        'msg': '请求成功',
-        'data': {
+        code: 200,
+        msg: '请求成功',
+        data: {
           totalExpense, // 当月支出
           totalIncome, // 当月收入
-          'totalPage': Math.ceil(listMap.length / page_size), // 总分页
-          'list': filterListMap || [], // 格式化后，并且经过分页处理的数据
+          totalPage: Math.ceil(listMap.length / page_size), // 总分页
+          list: filterListMap || [], // 格式化后，并且经过分页处理的数据
         },
       };
     } catch (e) {
       ctx.body = {
-        'code': 500,
-        'msg': '系统错误',
-        'data': null,
+        code: 500,
+        msg: '系统错误',
+        data: null,
       };
     }
   }
@@ -187,9 +187,9 @@ class BillController extends Controller {
     // 判断是否传入账单 id
     if (!id) {
       ctx.body = {
-        'code': 500,
-        'msg': '订单id不能为空',
-        'data': null,
+        code: 500,
+        msg: '订单id不能为空',
+        data: null,
       };
       return;
     }
@@ -198,15 +198,15 @@ class BillController extends Controller {
       // 从数据库获取账单详情
       const detail = await ctx.service.bill.detail(id, user_id);
       ctx.body = {
-        'code': 200,
-        'msg': '请求成功',
-        'data': detail,
+        code: 200,
+        msg: '请求成功',
+        data: detail,
       };
     } catch (error) {
       ctx.body = {
-        'code': 500,
-        'msg': '系统错误',
-        'data': null,
+        code: 500,
+        msg: '系统错误',
+        data: null,
       };
     }
   }
@@ -227,9 +227,9 @@ class BillController extends Controller {
     // 判空处理
     if (!amount || !type_id || !type_name || !date || !pay_type) {
       ctx.body = {
-        'code': 400,
-        'msg': '参数错误',
-        'data': null,
+        code: 400,
+        msg: '参数错误',
+        data: null,
       };
     }
 
@@ -253,15 +253,15 @@ class BillController extends Controller {
         user_id, // 用户 id
       });
       ctx.body = {
-        'code': 200,
-        'msg': '请求成功',
-        'data': null,
+        code: 200,
+        msg: '请求成功',
+        data: null,
       };
     } catch (error) {
       ctx.body = {
-        'code': 500,
-        'msg': '系统错误',
-        'data': null,
+        code: 500,
+        msg: '系统错误',
+        data: null,
       };
     }
   }
@@ -279,9 +279,9 @@ class BillController extends Controller {
 
     if (!date) {
       ctx.body = {
-        'code': 400,
-        'msg': '参数错误',
-        'data': null,
+        code: 400,
+        msg: '参数错误',
+        data: null,
       };
       return;
     }
@@ -317,10 +317,10 @@ class BillController extends Controller {
         const index = arr.findIndex(item => item.type_id === cur.type_id);
         if (index === -1) {
           arr.push({
-            'type_id': cur.type_id,
-            'type_name': cur.type_name,
-            'pay_type': cur.pay_type,
-            'number': Number(cur.amount),
+            type_id: cur.type_id,
+            type_name: cur.type_name,
+            pay_type: cur.pay_type,
+            number: Number(cur.amount),
           });
         }
         if (index > -1) {
@@ -335,19 +335,19 @@ class BillController extends Controller {
       });
 
       ctx.body = {
-        'code': 200,
-        'msg': '请求成功',
-        'data': {
-          'total_expense': Number(total_expense).toFixed(2),
-          'total_income': Number(total_income).toFixed(2),
-          'total_data': total_data || [],
+        code: 200,
+        msg: '请求成功',
+        data: {
+          total_expense: Number(total_expense).toFixed(2),
+          total_income: Number(total_income).toFixed(2),
+          total_data: total_data || [],
         },
       };
     } catch (error) {
       ctx.body = {
-        'code': 500,
-        'msg': '系统错误',
-        'data': null,
+        code: 500,
+        msg: '系统错误',
+        data: null,
       };
     }
   }
