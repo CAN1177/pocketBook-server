@@ -1,13 +1,14 @@
-"use strict";
+'use strict';
 
-const Service = require("egg").Service;
+const Service = require('egg').Service;
 
 class BillService extends Service {
   async add(params) {
+    // eslint-disable-next-line no-unused-vars
     const { ctx, app } = this;
     try {
       // 往 bill 表中，插入一条账单数据
-      const result = await app.mysql.insert("bill", params);
+      const result = await app.mysql.insert('bill', params);
       return result;
     } catch (error) {
       console.log(error);
@@ -17,9 +18,10 @@ class BillService extends Service {
 
   // 获取账单列表
   async list(id) {
+    // eslint-disable-next-line no-unused-vars
     const { ctx, app } = this;
-    const QUERY_STR = "id, pay_type, amount, date, type_id, type_name, remark";
-    let sql = `select ${QUERY_STR} from bill where user_id = ${id}`;
+    const QUERY_STR = 'id, pay_type, amount, date, type_id, type_name, remark';
+    const sql = `select ${QUERY_STR} from bill where user_id = ${id}`;
     try {
       const result = await app.mysql.query(sql);
       return result;
@@ -30,9 +32,10 @@ class BillService extends Service {
   }
 
   async detail(id, user_id) {
+    // eslint-disable-next-line no-unused-vars
     const { ctx, app } = this;
     try {
-      const result = await app.mysql.get("bill", { id, user_id });
+      const result = await app.mysql.get('bill', { id, user_id });
       return result;
     } catch (error) {
       console.log(error);

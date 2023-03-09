@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const Controller = require("egg").Controller;
+const Controller = require('egg').Controller;
 
 class UserController extends Controller {
   // 用户注册
@@ -12,7 +12,7 @@ class UserController extends Controller {
     if (!username || !password) {
       ctx.body = {
         code: 500,
-        msg: "账号密码不能为空",
+        msg: '账号密码不能为空',
         data: null,
       };
       return;
@@ -24,7 +24,7 @@ class UserController extends Controller {
     if (userInfo && userInfo.id) {
       ctx.body = {
         code: 500,
-        msg: "账户名已被注册，请重新输入",
+        msg: '账户名已被注册，请重新输入',
         data: null,
       };
       return;
@@ -32,26 +32,26 @@ class UserController extends Controller {
 
     // 默认头像，放在 user.js 的最外，部避免重复声明。
     const defaultAvatar =
-      "http://s.yezgea02.com/1615973940679/WeChat77d6d2ac093e247c361f0b8a7aeb6c2a.png";
+      'http://s.yezgea02.com/1615973940679/WeChat77d6d2ac093e247c361f0b8a7aeb6c2a.png';
     // 调用 service 方法，将数据存入数据库。
     const result = await ctx.service.user.register({
       username,
       password,
       ctime: +new Date(),
-      signature: "世界和平。",
+      signature: '世界和平。',
       avatar: defaultAvatar,
     });
 
     if (result) {
       ctx.body = {
         code: 200,
-        msg: "注册成功",
+        msg: '注册成功',
         data: null,
       };
     } else {
       ctx.body = {
         code: 500,
-        msg: "注册失败",
+        msg: '注册失败',
         data: null,
       };
     }
@@ -61,22 +61,22 @@ class UserController extends Controller {
   async login() {
     const { ctx, app } = this;
     const { username, password } = ctx.request.body;
-    //根据用户名，在数据库中查找相应的id操作
+    // 根据用户名，在数据库中查找相应的id操作
     const userInfo = await ctx.service.user.getUserByName(username);
     // 没找到无用户
     if (!userInfo || !userInfo.id) {
       ctx.body = {
         code: 500,
-        msg: "账号不存在",
+        msg: '账号不存在',
         data: null,
       };
       return;
     }
     // 找到用户，并且判断输入密码与数据库中用户密码。
-    if (userInfo && password != userInfo.password) {
+    if (userInfo && password !== userInfo.password) {
       ctx.body = {
         code: 500,
-        msg: "账号密码错误",
+        msg: '账号密码错误',
         data: null,
       };
       return;
@@ -95,7 +95,7 @@ class UserController extends Controller {
 
     ctx.body = {
       code: 200,
-      message: "登录成功",
+      message: '登录成功',
       data: {
         token,
       },
@@ -111,7 +111,7 @@ class UserController extends Controller {
     // 响应接口
     ctx.body = {
       code: 200,
-      message: "获取成功",
+      message: '获取成功',
       data: {
         ...decode,
       },
@@ -129,11 +129,12 @@ class UserController extends Controller {
     // userInfo 中应该有密码信息，所以我们指定下面四项返回给客户端
     ctx.body = {
       code: 200,
-      msg: "请求成功",
+      msg: '请求成功',
       data: {
         id: userInfo.id,
         username: userInfo.username,
-        signature: userInfo.signature || "",
+        signature: userInfo.signature || '',
+        // eslint-disable-next-line no-undef
         avatar: userInfo.avatar || defaultAvatar,
       },
     };
@@ -143,7 +144,7 @@ class UserController extends Controller {
   async editUserInfo() {
     const { ctx, app } = this;
     // 通过 post 请求，在请求体中获取签名字段 signature
-    const { signature = "", avatar = ''  } = ctx.request.body;
+    const { signature = '', avatar = '' } = ctx.request.body;
 
     try {
       let user_id;
@@ -151,10 +152,12 @@ class UserController extends Controller {
       // 解密 token 中的用户名称
       const decode = await app.jwt.verify(token, app.config.jwt.secret);
       if (!decode) return;
+      // eslint-disable-next-line prefer-const
       user_id = decode.id;
       // 通过 username 查找 userInfo 完整信息
       const userInfo = await ctx.service.user.getUserByName(decode.username);
       // 通过 service 方法 editUserInfo 修改 signature 信息。
+      // eslint-disable-next-line no-unused-vars
       const result = await ctx.service.user.editUserInfo({
         ...userInfo,
         signature,
@@ -163,7 +166,7 @@ class UserController extends Controller {
 
       ctx.body = {
         code: 200,
-        msg: "请求成功",
+        msg: '请求成功',
         data: {
           id: user_id,
           signature,
@@ -171,6 +174,7 @@ class UserController extends Controller {
           avatar,
         },
       };
+    // eslint-disable-next-line no-empty
     } catch (error) {}
   }
 }

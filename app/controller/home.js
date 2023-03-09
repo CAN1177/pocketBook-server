@@ -14,7 +14,7 @@ class HomeController extends Controller {
   async user() {
     const { ctx } = this;
     const result = await ctx.service.home.user();
-    ctx.body = result
+    ctx.body = result;
   }
   // post 请求方法
   async add() {
@@ -35,32 +35,33 @@ class HomeController extends Controller {
         code: 200,
         msg: '添加成功',
         data: null,
-      }
+      };
     } catch (e) {
       ctx.body = {
         code: 500,
         msg: '添加失败',
         data: null,
-      }
+      };
     }
   }
-  // 删除 
+  // 删除
   async delUser() {
     const { ctx } = this;
     const { id } = ctx.request.body;
     try {
+      // eslint-disable-next-line no-unused-vars
       const result = await ctx.service.home.delUser(id);
       ctx.body = {
         code: 200,
-        msg: "删除成功",
+        msg: '删除成功',
         data: null,
-      }
+      };
     } catch (err) {
       ctx.body = {
         code: 500,
         msg: '删除失败',
         data: null,
-      }
+      };
     }
   }
 
